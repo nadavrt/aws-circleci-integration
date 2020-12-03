@@ -14,5 +14,5 @@ jobs:
             echo 'Hello World!'
             echo 'This is the delivery pipeline'
       - run:
-        name: コードはここにあるぞ！
-        command: 'ls -al'
+        name: Check code
+        command: ls -al
