@@ -6,11 +6,11 @@ jobs:
     steps:
       - checkout
       - run: 
-        name: Initiate linters and tests
-        command: |
-          yarn install
-          yarn lint
-          yarn test
+          name: Initiate linters and tests
+          command: |
+            yarn install
+            yarn lint
+            yarn test
   Build:
     docker:
       - image: circleci/node:14.15
