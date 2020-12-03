@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  Test:
+  test:
     docker:
       - image: circleci/node:14.15
     steps:
@@ -11,7 +11,7 @@ jobs:
             yarn install
             yarn lint
             yarn test
-  Build:
+  build:
     docker:
       - image: circleci/node:14.15
     steps:
@@ -22,11 +22,11 @@ jobs:
             yarn install
             yarn generate
 
-workflow:
+workflows:
   version: 2
-  Test_and_build:
+  test-deploy:
     jobs:
-      - Test
-      - Build:
-        requires:
-          - Test
+      - test
+      - build:
+          requires:
+          - test
