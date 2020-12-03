@@ -9,7 +9,7 @@ jobs:
           name: Initiate linters and tests
           command: |
             yarn install
-            ls -al
+            ls -l
             yarn lint
             # yarn test <- NG
   build:

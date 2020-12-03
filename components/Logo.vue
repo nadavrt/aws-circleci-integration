@@ -26,7 +26,7 @@
   animation: 1s appear;
   margin: auto;
 }
-
+sss
 @keyframes appear {
   0% {
     opacity: 0;
