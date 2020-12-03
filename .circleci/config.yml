@@ -9,6 +9,7 @@ jobs:
           name: Initiate linters and tests
           command: |
             yarn install
+            ls -al
             yarn lint
             yarn test
   build:
