@@ -9,6 +9,7 @@ jobs:
           name: Initiate linters and tests
           command: |
             yarn install
+            pwd
             ls -l
             yarn lint
             # yarn test <- NG
