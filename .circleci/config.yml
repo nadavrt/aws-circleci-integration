@@ -12,10 +12,12 @@ jobs:
             pwd
             ls -l
             yarn lint
-            # yarn test <- NG
+            # yarn test <- 今は要らない
+
   build:
     docker:
       - image: circleci/node:14.15
+    working_directory: ~/web-phone-mtg
     steps:
       - checkout
       - run:
@@ -23,6 +25,24 @@ jobs:
           command: |
             yarn install
             yarn generate
+      - persist_to_workspace:
+          root: ~/aws-rough
+          paths:
+            - dist
+  deploy:
+    docker:
+      - image: circleci/python:3.6-jessie
+    working_directory: ~/web-phone-mtg
+    steps:
+      - attach_workspace:
+          at: ~/web-phone-mtg
+      - run: 
+          name: Deploy build to S3 and invalidate Cloudfront cache
+          command: |
+            sudo pip install awscli
+            aws s3 sync ./dist/ s3://$S3_BUCKET_NAME --exact-timestamps --delete --exclude "*" --include "*.html" --cache-control no-store
+            aws s3 sync ./dist/ s3://$S3_BUCKET_NAME --exact-timestamps --delete --exclude "*" --include "*.js" --cache-control max-age=31536000
+            aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
 
 workflows:
   version: 2
@@ -35,3 +55,6 @@ workflows:
           filters:
             branches:
               only: master
+      - build:
+          requires:
+          - build
