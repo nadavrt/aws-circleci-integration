@@ -26,7 +26,7 @@ jobs:
             yarn install
             yarn generate
       - persist_to_workspace:
-          root: ~/aws-rough
+          root: ~/web-phone-mtg
           paths:
             - dist
   deploy:
